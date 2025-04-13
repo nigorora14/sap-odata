@@ -1,0 +1,42 @@
+<mvc:View controllerName="ngonzano.project1.controller.ViewOdata"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Shell id="shell">
+        <App id="ap">
+            <pages>
+                <Page id="Page" title="{i18n>title}">
+                    <content>
+                        <Panel id="panel1" headerText="Selecciona screen">
+                            <Label id="labelShipName" labelFor="shipName" text="Ship Name" class="sapUiSmallMargin" />
+                            <Input id="shipName" width="20%" class="sapUiSmallMarginEnd" value="{selectionScreenMenu>/ShipName}" />
+                            <Label id="labelCountry" text="Country" class="sapUiSmallMargin" />
+                            <Select id="slCountry" selectedKey="{selectionScreenMenu>/CountryKey}" forceSelection="false" items="{selectionScreenMenu>/Countries}">
+                                <items>
+                                    <core:Item id="idCountry" key="{selectionScreenMenu>key}" text="{selectionScreenMenu>text}" />
+                                </items>
+                            </Select>
+                            <Button id="btnFilters" text="{i18n>btnFilter}" icon="sap-icon://clear-filter" press="onFilter" class="sapUiSmallMarginEnd" />
+                            <Button id="btnClean" text="{i18n>btnClean}" press="onClearFilters" class="sapUiSmallMarginEnd" icon="sap-icon://clear-all" />
+                        </Panel>
+                        <Panel id="panel2">
+                            <List id="list1" headerText="{i18n>invoicesHeaderList}" class="sapUiResponsiveMargin" width="auto" items="{/Invoices}">
+                                <items>
+                                    <ObjectListItem id="object1" title="{ShipName} - {Country}" number="{ 
+                                                                parts : [ {path: 'ExtendedPrice'},
+                                                                {
+                                                                    path: 'selectionScreenMenu>/Currency'}],
+                                                                    type: 'sap.ui.model.type.Currency',
+                                                                    formatOptions: {
+                                                                        showMeasure : false
+                                                                    }
+                                                                }" numberUnit="{selectionScreenMenu>/Currency}" numberState="{= ${ExtendedPrice} > 100 ? 'Success' : 'Warning' }" />
+                                </items>
+                            </List>
+                        </Panel>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
